@@ -19,7 +19,7 @@ const AddNewCourse = () => {
       lessons: JSON.stringify(lessonsArray)
     };
 
-    axios.post('http://13.218.74.38:8080/api/Course', courseData)
+    axios.post('http://52.23.200.127:8080/api/Course', courseData)
       .then(response => {
         setMessage('Course added successfully!');
         setCourseName('');
