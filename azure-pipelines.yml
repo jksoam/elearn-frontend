@@ -16,8 +16,9 @@ stages:
   displayName: Build image
   jobs:
   - job: Build
-    displayName: Build
-    pool: default
+    displayName: Build 
+    pool:
+      vmImage: 'ubuntu-latest'
     steps:
     - task: Docker@2
       displayName: Build an image
@@ -31,3 +32,4 @@ stages:
         containerRegistry: 'Dockerhub-registry'
         repository: 'jksoam007'
         command: 'push'
+        
