@@ -7,23 +7,24 @@ trigger:
 
 resources:
 - repo: self
+pool: default
 
 variables:
-  tag: '$(Build.BuildId)'
-
+  tag: v1
 stages:
 - stage: Build
   displayName: Build image
   jobs:
   - job: Build
     displayName: Build
-    pool: default
+   
       
 
     steps:
-    - task: PublishBuildArtifacts@1
+    - task: Docker@2
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
-        publishLocation: 'Container'
-        MaxArtifactSize: 
+        containerRegistry: 'Dockerhub-registry'
+        repository: 'jksoam777/frantnew'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        tags: 
