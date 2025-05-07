@@ -32,7 +32,7 @@ stages:
       inputs:
         action: 'deploy'
         connectionType: 'azureResourceManager'
-        azureSubscriptionConnection: 'Azure subscription 1(3ace2f6c-7fad-4649-99ca-c60df54b9873)'
+        azureSubscriptionConnection: 'service-jk'
         azureResourceGroup: 'jksoam'
         kubernetesCluster: 'jkculster'
         manifests: 'Manifests'
