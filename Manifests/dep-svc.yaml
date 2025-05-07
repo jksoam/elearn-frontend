@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frantnew-container
-        image: jksoam777/frantnew:v1
+        image: jksoam777/frantV:v1
         ports:
         - containerPort: 80
 
