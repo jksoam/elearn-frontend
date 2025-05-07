@@ -35,4 +35,4 @@ stages:
         azureSubscriptionConnection: 'service-jk'
         azureResourceGroup: 'jksoam'
         kubernetesCluster: 'jkculster'
-        manifests: 'Manifests'
+        manifests: 'Manifests/dep-svc.yaml'
