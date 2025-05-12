@@ -1,0 +1,85 @@
+# Node.js with React
+# Build a Node.js project that uses React.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- main
+
+pool: default
+
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      #!/bin/bash
+      
+      set -e  # Exit on error
+      
+      echo "🔄 Updating package index..."
+      sudo apt update && sudo apt upgrade -y
+      
+      echo "📦 Installing prerequisites..."
+      sudo apt install -y curl gnupg2 software-properties-common apt-transport-https ca-certificates lsb-release
+      
+      ###########################################
+      # Node.js v20
+      ###########################################
+      echo "⬇️ Installing Node.js v20..."
+      
+      curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+      sudo apt install -y nodejs
+      
+      echo "✅ Node.js version: $(node -v)"
+      echo "✅ npm version: $(npm -v)"
+      
+      ###########################################
+      # Java JDK 11
+      ###########################################
+      echo "☕ Installing Java JDK 11..."
+      
+      sudo apt install -y openjdk-11-jdk
+      
+      echo "✅ Java version:"
+      java -version
+      
+      ###########################################
+      # Docker (latest stable)
+      ###########################################
+      echo "🐳 Installing Docker..."
+      
+      # Remove old versions
+      sudo apt remove -y docker docker-engine docker.io containerd runc || true
+      
+      # Add Docker’s official GPG key
+      sudo install -m 0755 -d /etc/apt/keyrings
+      curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+          | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+      
+      # Add repository
+      echo \
+        "deb [arch=$(dpkg --print-architecture) \
+        signed-by=/etc/apt/keyrings/docker.gpg] \
+        https://download.docker.com/linux/ubuntu \
+        $(lsb_release -cs) stable" \
+        | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+      
+      sudo apt update
+      sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+      
+      # Add current user to docker group
+      sudo usermod -aG docker $USER
+      
+      echo "✅ Docker version: $(docker --version)"
+      
+      ###########################################
+      # Maven
+      ###########################################
+      echo "🔧 Installing Maven..."
+      sudo apt install -y maven
+      
+      echo "✅ Maven version: $(mvn -v)"
+      
+      echo "🎉 All tools installed successfully!"
+      echo "📌 Please logout and login again to apply docker group permission."
+
