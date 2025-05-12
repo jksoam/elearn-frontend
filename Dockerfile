@@ -3,9 +3,13 @@ FROM node AS builder
 
 WORKDIR /app
 
-# Copy source files and build
-COPY . .
+# Copy only required files
+COPY package*.json ./
 RUN npm install
+
+COPY public ./public
+COPY src ./src
+
 RUN npm run build
 
 # === Stage 2: Serve with Nginx ===
@@ -15,10 +19,7 @@ FROM nginx
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy built React files from builder stage
-COPY --from=builder /app/build/. /usr/share/nginx/html
-
-# Copy custom nginx config if needed (optional)
-# COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder /app/build /usr/share/nginx/html
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
