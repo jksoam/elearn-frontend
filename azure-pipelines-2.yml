@@ -3,8 +3,7 @@
 trigger:
 - main
 
-pool:
-  vmImage: 'ubuntu-latest'
+pool: default
 
 steps:
 - task: Bash@3
