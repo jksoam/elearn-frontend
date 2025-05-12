@@ -19,7 +19,10 @@ const AddNewCourse = () => {
       lessons: lessonsArray
     };
 
-    axios.post('http://52.87.163.171:8080/api/Course', courseData)
+    // Get backend URL from environment variable
+    const apiUrl = process.env.REACT_APP_BACKEND_URL; // or REACT_APP_BACKEND_URL_INTERNAL if you want internal URL
+
+    axios.post(apiUrl, courseData)
       .then(response => {
         setMessage('Course added successfully!');
         setCourseName('');
