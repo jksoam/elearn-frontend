@@ -8,8 +8,9 @@ const Home = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Replace with your backend API URL if different
-    axios.get('http://52.87.163.171:8080/api/Course')
+    const apiUrl = process.env.REACT_APP_BACKEND_URL; // Fetch URL from .env
+
+    axios.get(apiUrl)
       .then(response => {
         setCourses(response.data);
         setLoading(false);
