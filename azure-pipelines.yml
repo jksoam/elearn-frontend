@@ -31,5 +31,15 @@ stages:
         repository: 'jksoam777/frantV'
         command: 'push'
         tags: 'v1'
+    - task: KubernetesManifest@1
+      inputs:
+        action: 'deploy'
+        connectionType: 'azureResourceManager'
+        azureSubscriptionConnection: 'service-jk'
+        azureResourceGroup: 'jksoam'
+        kubernetesCluster: 'jkcluster'
+        manifests: 'Manifests/*'
+    
+    
      
     
