@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
       - name: frantnew-container
-        image: jksoam777/jkelearn  # <-- This is OK
+        image: jksoam777/el-back:v1  # <-- This is OK
         ports:
-        - containerPort: 80
+        - containerPort: 8080
 
 ---
 apiVersion: v1
@@ -30,4 +30,4 @@ spec:
   ports:
   - protocol: TCP
     port: 80
-    targetPort: 80
+    targetPort: 8080
