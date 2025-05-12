@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frantnew-container
-        image: jksoam777/frantv:v1  # <-- This is OK
+        image: jksoam777/jkelearn  # <-- This is OK
         ports:
         - containerPort: 80
 
