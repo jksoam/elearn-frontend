@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frantnew-deployment
+  name: jksoam777/frantv
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: frantnew
+      app: jksoam777/frantv
   template:
     metadata:
       labels:
-        app: frantnew
+        app: jksoam777/frantv
     spec:
       containers:
       - name: frantnew-container
-        image: jksoam777/frantnew:latest
+        image: jksoam777/frantv:v1
         ports:
         - containerPort: 80
 
@@ -26,7 +26,7 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: frantnew
+    app: jksoam777/frantv
   ports:
   - protocol: TCP
     port: 80
