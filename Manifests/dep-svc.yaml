@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jksoam777/frantv
+  name: jksoam777-frantv  # <-- Fixed: '/' replaced with '-'
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: jksoam777/frantv
+      app: jksoam777-frantv  # <-- Fixed
   template:
     metadata:
       labels:
-        app: jksoam777/frantv
+        app: jksoam777-frantv  # <-- Fixed
     spec:
       containers:
       - name: frantnew-container
-        image: jksoam777/frantv:v1
+        image: jksoam777/frantv:v1  # <-- This is OK
         ports:
         - containerPort: 80
 
@@ -26,7 +26,7 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: jksoam777/frantv
+    app: jksoam777-frantv  # <-- Fixed
   ports:
   - protocol: TCP
     port: 80
