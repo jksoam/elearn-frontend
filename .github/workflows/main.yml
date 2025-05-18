@@ -1,0 +1,16 @@
+name: Echo Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: First echo
+        run: echo "👋 Hello from the first step!"
+
+      - name: Second echo
+        run: echo "✅ This is the second echo step."
