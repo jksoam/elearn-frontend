@@ -11,4 +11,5 @@ steps:
     script: |
       docker build -t myapp:v1 .
       docker tag myapp:v1 jkacr1.azurecr.io/myapp:v1
+      az acr login --name jkacr1
       docker push jkacr1.azurecr.io/myapp:v1
