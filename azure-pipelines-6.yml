@@ -5,11 +5,20 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: Bash@3
+- task: DockerInstaller@0
   inputs:
-    targetType: 'inline'
-    script: |
+    dockerVersion: '17.09.0-ce'
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'service-jk'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
       docker build -t myapp:v1 .
       docker tag myapp:v1 jkacr1.azurecr.io/myapp:v1
+      
+      # Login to ACR using Azure credentials
       az acr login --name jkacr1
+      
+      # Push image
       docker push jkacr1.azurecr.io/myapp:v1
