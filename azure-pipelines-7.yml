@@ -18,12 +18,12 @@ steps:
 
 - task: SonarCloudPrepare@1
   inputs:
-    SonarCloud: 'sonorcloud'           # ✅ Service connection name
-    organization: 'jksoam007'          # ✅ Your SonarCloud org
+    SonarCloud: 'sonorcloud'
+    organization: 'jksoam007'
     scannerMode: 'CLI'
     configMode: 'manual'
-    cliProjectKey: 'your-project-key'  # ✅ Your unique project key from SonarCloud
-    cliProjectName: 'your-project-name'
+    cliProjectKey: 'jksoam007'
+    cliProjectName: 'jksoam007'
     cliSources: 'src'
 
 - task: SonarCloudAnalyze@1
