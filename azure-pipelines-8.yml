@@ -21,7 +21,7 @@ steps:
 # Step 4: Prepare SonarQube analysis
 - task: SonarQubePrepare@5
   inputs:
-    SonarQube: 'sonarqube'  # Your SonarQube service connection
+    SonarQube: 'sonar'
     scannerMode: 'CLI'
     configMode: 'manual'
     cliProjectKey: 'varun'
