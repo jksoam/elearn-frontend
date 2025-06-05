@@ -21,7 +21,10 @@ steps:
   inputs:
     SonarQube: 'sonar'
     scannerMode: 'cli'
-    configMode: 'file'
+    configMode: 'manual'
+    cliProjectKey: 'varun'
+    cliProjectName: 'varun'
+    cliSources: '.'
 - task: SonarQubeAnalyze@7
   inputs:
     jdkversion: 'JAVA_HOME_17_X64'
