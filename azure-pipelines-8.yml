@@ -27,6 +27,10 @@ steps:
     cliProjectKey: 'varun'
     cliProjectName: 'varun'
     cliSources: '.'
+    extraProperties: |
+      sonar.projectVersion=1.0
+      # Don't use branch name to avoid Community Edition limitation
+      sonar.branch.name=
 
 # Step 5: Run Sonar Scanner (React/JS uses CLI scanner)
 - script: |
