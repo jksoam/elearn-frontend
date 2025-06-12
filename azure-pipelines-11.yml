@@ -1,26 +1,46 @@
 trigger:
- branches:
+  branches:
     include:
       - main
+
 variables:
   - group: VariableGroupJK
+
+  - name: IMAGE_NAME
+    value: myapp
+
+  - name: IMAGE_TAG
+    value: $(Build.BuildId)
+
+  - name: FULL_IMAGE_NAME
+    value: $(LoginServer)/$(IMAGE_NAME):$(IMAGE_TAG)
+
 pool:
- vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-latest'
+
 steps:
 - task: DockerInstaller@0
+  displayName: 'Install Docker'
   inputs:
     dockerVersion: '17.09.0-ce'
 
 - task: Bash@3
+  displayName: 'Docker Login'
   inputs:
     targetType: 'inline'
-    script: 'echo $(Password) | docker login $(LoginServer) -u $(Username) --password-stdin'
+    script: |
+      echo "$(Password)" | docker login "$(LoginServer)" -u "$(Username)" --password-stdin
 
 - task: Bash@3
+  displayName: 'Docker Build'
   inputs:
     targetType: 'inline'
-    script: 'docker build -t $(LoginServer)/myapp:$(Build.BuildId)'
+    script: |
+      docker build -t "$(FULL_IMAGE_NAME)" .
+
 - task: Bash@3
+  displayName: 'Docker Push'
   inputs:
     targetType: 'inline'
-    script: 'docker push $(LoginServer)/myapp:$(Build.BuildId)'
+    script: |
+      docker push "$(FULL_IMAGE_NAME)"
