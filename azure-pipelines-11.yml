@@ -10,10 +10,7 @@ steps:
 - task: DockerInstaller@0
   inputs:
     dockerVersion: '17.09.0-ce'
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: 'docker push $(LoginServer)/myapp:(Build.BuildId)'
+
 - task: Bash@3
   inputs:
     targetType: 'inline'
@@ -22,4 +19,8 @@ steps:
 - task: Bash@3
   inputs:
     targetType: 'inline'
-    script: 'docker build -t $(LoginServer)/myapp:(Build.BuildId)'
+    script: 'docker build -t $(LoginServer)/myapp:$(Build.BuildId)'
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: 'docker push $(LoginServer)/myapp:$(Build.BuildId)'
