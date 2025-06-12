@@ -1,0 +1,19 @@
+trigger:
+ branches:
+    include:
+      - main
+variables:
+  - group: VariableGroupJK
+pool:
+ vmImage: 'ubuntu-latest'
+steps:
+  - 
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: 'echo $(Password) | docker login $(LoginServer) -u $(Username) --password-stdin'
+
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: 'docker build -t $(LoginServer)/myapp:(Build.BuildId)'
