@@ -19,6 +19,13 @@ stages:
             PathtoPublish: '$(System.DefaultWorkingDirectory)/build'
             ArtifactName: 'NPM-ARC'
             publishLocation: 'Container'
+        - task: DownloadBuildArtifacts@1
+          inputs:
+            buildType: 'current'
+            downloadType: 'single'
+            artifactName: 'NPM-ARC'
+            downloadPath: '$(System.ArtifactsDirectory)'
+        
         
 
 
