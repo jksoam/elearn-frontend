@@ -16,7 +16,7 @@ stages:
             script: 'npm run build'
         - task: PublishBuildArtifacts@1
           inputs:
-            PathtoPublish: 'build'
+            PathtoPublish: '$(Build.SourcesDirectory)/build'
             ArtifactName: 'NPM-ARC'
             publishLocation: 'Container'
         
