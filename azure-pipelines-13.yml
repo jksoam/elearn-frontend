@@ -31,7 +31,7 @@ stages:
             runOptions: 'commands'
             commands: |
               sudo rm -rf /var/www/html/*
-              sudo cp -r $(Pipeline.Workspace)/NPM-ARC/* /var/www/html/
+              sudo cp -r $(System.DefaultWorkingDirectory)/build/* /var/www/html/
               sudo chmod -R 755 /var/www/html
               sudo systemctl restart nginx
             readyTimeout: '20000'
