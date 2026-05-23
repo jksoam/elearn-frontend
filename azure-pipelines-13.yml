@@ -25,6 +25,34 @@ stages:
             downloadType: 'single'
             artifactName: 'NPM-ARC'
             downloadPath: '$(System.ArtifactsDirectory)'
+        - task: SSH@0
+          inputs:
+            sshEndpoint: 'ssh-vm'
+            runOptions: 'inline'
+            inline: |
+              #!/bin/bash
+              
+              # Update packages
+              sudo apt update -y
+              
+              # Install Nginx
+              sudo apt install nginx -y
+              
+              # Enable Nginx service
+              sudo systemctl enable nginx
+              
+              # Start Nginx
+              sudo systemctl start nginx
+              
+              # Check status
+              sudo systemctl status nginx --no-pager
+              
+              # Allow firewall (optional)
+              sudo ufw allow 'Nginx Full'
+              
+              echo "Nginx installation completed."
+            readyTimeout: '20000'
+        
         
         
 
