@@ -28,30 +28,15 @@ stages:
         - task: SSH@0
           inputs:
             sshEndpoint: 'ssh-vm'
-            runOptions: 'inline'
-            inline: |
-              #!/bin/bash
-              
-              # Update packages
-              sudo apt update -y
-              
-              # Install Nginx
-              sudo apt install nginx -y
-              
-              # Enable Nginx service
-              sudo systemctl enable nginx
-              
-              # Start Nginx
-              sudo systemctl start nginx
-              
-              # Check status
-              sudo systemctl status nginx --no-pager
-              
-              # Allow firewall (optional)
-              sudo ufw allow 'Nginx Full'
-              
-              echo "Nginx installation completed."
+            runOptions: 'commands'
+            commands: |
+              sudo rm -rf /var/www/html/*
+              sudo cp -r /home/azureuser/build/* /var/www/html/
+              sudo chmod -R 755 /var/www/html
+              sudo systemctl restart nginx
             readyTimeout: '20000'
+        
+
         
         
         
