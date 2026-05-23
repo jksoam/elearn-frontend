@@ -1,46 +1,53 @@
 name: frantend
+
 trigger: none
+
 pool:
   vmImage: 'ubuntu-latest'
 
 stages:
-  - stage: 
-    jobs:
-      - job:
-        steps:
-        - task: Npm@1
-          inputs:
-            command: 'install'
-        - task: Bash@3
-          inputs:
-            targetType: 'inline'
-            script: 'npm run build'
-        - task: PublishBuildArtifacts@1
-          inputs:
-            PathtoPublish: '$(System.DefaultWorkingDirectory)/build'
-            ArtifactName: 'NPM-ARC'
-            publishLocation: 'Container'
-        - task: DownloadBuildArtifacts@1
-          inputs:
-            buildType: 'current'
-            downloadType: 'single'
-            artifactName: 'NPM-ARC'
-            downloadPath: '$(System.ArtifactsDirectory)'
-        - task: SSH@0
-          inputs:
-            sshEndpoint: 'ssh-vm'
-            runOptions: 'commands'
-            commands: |
-              sudo rm -rf /var/www/html/*
-              sudo cp -r $(System.DefaultWorkingDirectory)/build/* /var/www/html/
-              sudo chmod -R 755 /var/www/html
-              sudo systemctl restart nginx
-            readyTimeout: '20000'
-        
+- stage: Build_And_Deploy
+  jobs:
+  - job: Build
+    steps:
 
-        
-        
-        
+    - task: Npm@1
+      inputs:
+        command: 'install'
 
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          npm run build
 
-     
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(System.DefaultWorkingDirectory)/build'
+        ArtifactName: 'NPM-ARC'
+        publishLocation: 'Container'
+
+    - task: DownloadBuildArtifacts@1
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'NPM-ARC'
+        downloadPath: '$(System.ArtifactsDirectory)'
+
+    - task: CopyFilesOverSSH@0
+      inputs:
+        sshEndpoint: 'ssh-vm'
+        sourceFolder: '$(System.ArtifactsDirectory)/NPM-ARC'
+        contents: '**'
+        targetFolder: '/home/adminuser/NPM-ARC'
+
+    - task: SSH@0
+      inputs:
+        sshEndpoint: 'ssh-vm'
+        runOptions: 'commands'
+        commands: |
+          sudo rm -rf /var/www/html/*
+          sudo cp -r /home/adminuser/NPM-ARC/* /var/www/html/
+          sudo chmod -R 755 /var/www/html
+          sudo systemctl restart nginx
+        readyTimeout: '20000'
