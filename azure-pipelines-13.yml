@@ -1,16 +1,15 @@
-
-
-trigger:
-- main
-
+name: frantend
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'
 
-steps:
-  - 
-- task: Npm@1
-  inputs:
-    command: 'install'
+stages:
+  - stage: 
+    jobs:
+      - job:
+        steps:
+        - task: Npm@1
+          inputs:
+            command: 'install'
 
- 
 
+     
